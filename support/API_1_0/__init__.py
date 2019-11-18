@@ -23,6 +23,9 @@ api.add_resource(user_V.Users_Views, '/users', '/users/<int:id>', endpoint='user
 api.add_resource(user_V.Groups_List_Views, '/group_list', '/group_list/<int:id>', endpoint='group_list')
 api.add_resource(user_V.Groups_Views, "/groups", "/groups/<int:id>", endpoint="groups")
 
+# 用户和组关联
+api.add_resource(user_V.Group_User_List_Views, '/groupuser', '/groupuser/<int:id>', endpoint='groupuser')
+
 # 菜单
 api.add_resource(menu_V.Menu_Views, '/menu', endpoint='menu')
 api.add_resource(menu_V.Paren_Views, '/paren', endpoint='paren')

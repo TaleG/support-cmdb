@@ -125,8 +125,11 @@ class Groups_List_Views(Resource):
 
         else:
             # superTest = SupResourceViews(Groups_Models)
+            # 传入页码和条数参数查出对应页的数据
             GroupData = self.GroupDatabase.GetPageData(page_size, currentPage)
+            # 把数据放到ListData中格式化
             PageData = self.GroupDatabase.ListData(GroupData)
+            # 统计数据库所有数据
             DataCount = self.GroupDatabase.CountData()
             return jsonify(code=RET.OK, codemsg="Success.", data=PageData, total=DataCount)
 

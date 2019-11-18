@@ -20,7 +20,7 @@ class SupSqlalchemyTools(object):
             Count = db.session.query(self.Database).count()
         except Exception as e:
             current_app.logger.error(e)
-            return
+            return jsonify(code=RET.DBERR, codemsg="Database Error.")
         return Count
 
     def GetByIdData(self, id):
@@ -44,6 +44,18 @@ class SupSqlalchemyTools(object):
         """
         try:
             Data = db.session.query(self.Database).filter_by(id=id).all()
+        except Exception as e:
+            current_app.logger.error(e)
+            return jsonify(code=RET.DBERR, codemsg="Database Error.")
+        return Data
+
+    def GetAllData(self):
+        """
+        查看数据库所有数据
+        :return:
+        """
+        try:
+            Data = db.session.query(self.Database).all()
         except Exception as e:
             current_app.logger.error(e)
             return jsonify(code=RET.DBERR, codemsg="Database Error.")
@@ -80,6 +92,16 @@ class SupResourceViews(SupSqlalchemyTools):
         """
         for DataInfo in SupData:
             self.DataList.append(DataInfo.to_json())
+        return self.DataList
+
+    def ListLinkData(self, SupData):
+        """
+        初始化数据把数据放到列表中
+        :param SupData:
+        :return:
+        """
+        for DataInfo in SupData:
+            self.DataList.append(DataInfo.to_link_json())
         return self.DataList
 
     def SupGetById(self, id):

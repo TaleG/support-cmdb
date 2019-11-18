@@ -3,3 +3,4 @@
 from .UsersViews import *
 from .AuthUserViews import *
 from .GroupViews import *
+from .GroupUserViews import *

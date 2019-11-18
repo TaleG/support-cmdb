@@ -33,6 +33,14 @@ class Users_Models(db.Model):
         }
         return json_data
 
+    def to_link_json(self):
+        json_data = {
+            'key': self.id,
+            'label': self.name,
+            'disabled': False
+        }
+        return json_data
+
 
     @property
     def name_info(self):

@@ -14,9 +14,9 @@ class Users_Groups_Models(db.Model):
     def to_json(self):
         json_data = {
             "id": self.id,
-            "userId": self.userId,
-            "userName": self.support_users.name,
+            "key": self.userId,
+            "label": self.support_users.name,
+            "disabled": False,
             "groupId": self.groupId,
-            "groupName": self.support_groups.groupName
         }
         return json_data
