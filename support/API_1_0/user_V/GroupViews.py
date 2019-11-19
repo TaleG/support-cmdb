@@ -15,22 +15,6 @@ class Groups_Views(Resource):
         self.GroupDatabase = SupResourceViews(Groups_Models)
 
 
-    # def get(self, id):
-    #     """
-    #     条件查询当前组有哪些用户
-    #     :return:
-    #     """
-    #     try:
-    #         UserGroupData = Users_Groups_Models.query.filter_by(id=id).all()
-    #     except Exception as e:
-    #         current_app.logger.error(e)
-    #         return jsonify(code=RET.DBERR, codemsg="Database Error.")
-    #     UserGroupList = []
-    #     for UserGroupInfo in UserGroupData:
-    #         UserGroupList.append(UserGroupInfo.to_json())
-    #     return jsonify(code=RET.OK, codemsg="Succeed.", data=UserGroupList)
-
-
     def post(self):
         """
         添加数据
