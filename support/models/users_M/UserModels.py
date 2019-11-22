@@ -12,9 +12,11 @@ class Users_Models(db.Model):
     __tablename__ = "support_users"
 
     id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String(128))
     name = db.Column(db.String(32), unique=True, nullable=False)
     username = db.Column(db.String(32), unique=True, nullable=False)
     password = db.Column(db.String(128), unique=True, nullable=False)
+    userRole = db.Column(db.String(32), default="user")
     userEmail = db.Column(db.String(64))
     userPhone = db.Column(db.String(11))
     userLoginIp = db.Column(db.String(32))
@@ -24,7 +26,9 @@ class Users_Models(db.Model):
     def to_json(self):
         json_data = {
             "id": self.id,
+            "uuid": self.uuid,
             "name": self.name,
+            "userRole": self.userRole,
             "username": self.username,
             "userEmail": self.userEmail,
             "userPhone": self.userPhone,
@@ -102,5 +106,5 @@ class Users_Models(db.Model):
     # 为token串设置有效期为：3600 * 24 * 7
     def generate_auth_token(self, expiration=3600 * 24 * 7):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        token = s.dumps({'id': self.id, "name": self.name}).decode('ascii')
+        token = s.dumps({'id': self.id, "name": self.name, "uuid": self.uuid, "role": self.userRole}).decode('ascii')
         return token

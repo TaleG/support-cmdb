@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 #_*_ coding:utf-8 _*_
+import join
+import uuid
 from flask import current_app, request, jsonify, g
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
@@ -7,6 +9,7 @@ from sqlalchemy import or_
 from support import db
 from support.utils import RET, login_required
 from support.models import Users_Models
+from support.utils import SupResourceViews
 
 class Users_Views(Resource):
     """用户视图"""
@@ -40,12 +43,16 @@ class Users_Views(Resource):
         username = req_data.get("username")
         password = req_data.get("password")
 
+        suid = str(uuid.uuid4())
+
         try:
             # 把数据和数据库字段组起来。
             User_Data = Users_Models(
                 username=username,
                 userPhone=req_data.get("userPhone"),
                 userEmail=req_data.get("userEmail"),
+                userRole=req_data.get("userRole"),
+                uuid=''.join(suid.split("-")),
                 userLoginIp=request.remote_addr,    # 获取登录IP
                 userDesc=req_data.get("userDesc")
             )
@@ -85,10 +92,13 @@ class Users_Views(Resource):
 
             UserData.name = req_data.get("name", UserData.name)
             UserData.username = req_data.get("username", UserData.username)
-            UserData.password = req_data.get("password", UserData.password)
+            UserData.userRole = req_data.get("userRole", UserData.userRole)
             UserData.userEmail = req_data.get("userEmail", UserData.userEmail)
             UserData.userPhone = req_data.get("userPhone", UserData.userPhone)
             UserData.userDesc = req_data.get("userDesc", UserData.userDesc)
+
+            # 在用户model中创建了hash加密，所有创建的密码都会做成加密。
+            UserData.password_hash = req_data.get("password", UserData.password)
 
             db.session.add(UserData)
             db.session.commit()
@@ -173,3 +183,15 @@ class Users_List_Views(Resource):
                 userList.append(userInfo.to_json())
 
             return jsonify(code=RET.OK, codemsg="Succeed.", data=userList, total=userCount)
+
+class ResetPassword(Resource):
+    """修改密码"""
+    def __init__(self):
+        self.UserData = SupResourceViews(Users_Models)
+
+    def put(self):
+        """
+        修改密码
+        :return:
+        """
+        pass
