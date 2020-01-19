@@ -8,7 +8,7 @@ class Config(object):
     SECRET_KEY = "6difejo#)+bg6ccmt%%_qmt_(go8+v1u*zoz(1u53qgia^t=%y"
 
     # 连接数据库
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:gg08199213@127.0.0.1:3306/support_server"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:123456@127.0.0.1:3306/support_server"
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     # 数据库慢查询记录阀值
     SLOW_DB_QUERY_TIME = 10000
@@ -20,7 +20,7 @@ class Config(object):
     # redis
     REDIS_HOST = "127.0.0.1"
     REDIS_PORT = 6379
-    REDIS_PASS = 'gg08199213'
+    REDIS_PASS = '123456'
 
     # flask-session配置
     SESSION_TYPE = 'redis'
